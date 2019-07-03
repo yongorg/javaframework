@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/mybatis-CRUD" />
+    <file type="web" url="file://$PROJECT_DIR$/mybatis1heima" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">

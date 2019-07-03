@@ -12,6 +12,7 @@
         <module>mybatis01-basic</module>
         <module>mybatis02-SQLMapper</module>
         <module>mybatis-CRUD</module>
+        <module>mybatis1heima</module>
     </modules>
 
     <dependencies>

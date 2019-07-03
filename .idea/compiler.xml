@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mybatis02-SQLMapper" />
         <module name="mybatis-CRUD" />
+        <module name="mybatis1heima" />
         <module name="mybatis01-basic" />
       </profile>
     </annotationProcessing>
