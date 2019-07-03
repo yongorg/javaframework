@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--  配置读取数据库属性文件   -->
+    <properties resource="database.properties"/>
+
+    <!-- 配置日志文件 -->
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+
+    <!--这里给实体类取别名，方便在mapper配置文件中使用-->
+    <typeAliases>
+        <package name="org.yong.pojo"/>
+
+        <!--下面这种很蠢，不推荐-->
+        <!--<typeAlias type="org.yong.pojo.BankUser" alias="BankUser" />-->
+    </typeAliases>
+
+    <!--  配置开发环境  -->
+    <environments default="test">
+        <!-- 测试环境 -->
+        <environment id="test">  <!-- id可以随便取 -->
+            <!-- 配置事务管理  -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据源 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+
+
+        <!-- 测试环境2 -->
+        <environment id="test2">  <!-- id可以随便取 -->
+            <!-- 配置事务管理  -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据源 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--注册SQL映射文件-->
+    <mappers>
+        <mapper resource="mappers/UserDaoMapper"></mapper>
+    </mappers>
+</configuration>

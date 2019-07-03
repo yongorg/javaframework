@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace是命名空间 -->
+<!--注意： idea maven项目java目录下的xml不会编译，所以xml应该放在resources目录下面，或者在pom.xml中配置xml路径-->
+<mapper namespace="org.yong.dao.BankUserDao">
+
+    <!--银行账户隐射-->
+    <resultMap id="bankUserList" type="BankUser">
+        <id property="uid" column="uid"></id>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="bankId" column="bankId"></result>
+        <result property="money" column="money"></result>
+        <result property="name" column="name"></result>
+        <!--第一种association配置-->
+        <!--<association property="bank" javaType="Bank">
+            <id property="bankId" column="bankId"></id>
+            <result property="bankname" column="bankname"></result>
+        </association>-->
+
+        <!--第二种association配置-->
+        <association property="bank" resultMap="bankList"/>
+
+        <!-- 一对多 -->
+        <collection property="cards" ofType="Card">
+            <id property="cardNo" column="cardNo"></id>
+            <result property="cardType" column="cardType"></result>
+            <result property="userId" column="userId"></result>
+            <result property="bankId" column="bankId"></result>
+        </collection>
+    </resultMap>
+
+    <!--公共的resultmap  银行bank类-->
+    <resultMap id="bankList" type="bank">
+        <id property="bankId" column="bankId"></id>
+        <result property="bankname" column="bankname"></result>
+    </resultMap>
+
+    <!-- 查询总数  id是方法名  resultType是返回值类型 -->
+    <select id="count" resultType="int">
+        select count(*) from bank_user
+    </select>
+
+    <!-- 查询所有用户 -->
+<!--    <select id="getList" resultType="org.yong.pojo.BankUser">-->
+<!--		select * from bank_user-->
+<!--	</select>-->
+
+    <!-- 查询所有用户 -->
+    <select id="getList" resultMap="bankUserList">
+		select bu.*,b.* from bank_user bu,bank b where bu.bankId=b.bankId
+	</select>
+
+    <!--根据银行id，模糊查询用户名-->
+    <select id="getUserByName" resultType="BankUser" parameterType="BankUser">
+        select * from bank_user where bankId = #{bankId}
+        and name like concat("%",#{name},"%")
+    </select>
+
+    <!--resultType:返回类型类名不区分大小写  -->
+    <!--parameterType：参数类型-->
+    <select id="getUserById" resultType="bankUser" parameterType="int">
+        select * from bank_user where uid = #{uid}
+    </select>
+
+
+    <!--根据用户ID查询指定用户的所有银行卡类型-->
+    <select id="getCardByUserId" resultMap="bankUserList">
+        SELECT bu.*,c.* FROM bank_user bu,card c
+            where bu.uid = c.userId AND bu.uid = #{id}
+    </select>
+
+
+</mapper>
